@@ -10,27 +10,47 @@ import XCTest
 
 final class EmojisTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testSuccessfullCall() async {
+        // Clear tables.
+        Category.deleteAll()
+        // Setup URLSessionSuccessMock for success.
+        let mockSession = URLSessionSuccessMock(forSuccess: true)
+        let success = await EmojiService.getEmojis(urlSession: mockSession)
+        // Assert data was decoded and saved.
+        XCTAssertTrue(success)
+        // Check data count.
+        XCTAssertEqual(Emoji.getAll().count, 10)
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testFailedCall() async {
+        // Clear tables.
+        Category.deleteAll()
+        // Setup URLSessionSuccessMock for failure.
+        let mockSession = URLSessionSuccessMock(forSuccess: false)
+        let success = await EmojiService.getEmojis(urlSession: mockSession)
+        // Assert data was not decoded and saved.
+        XCTAssertFalse(success)
+        // Check data count.
+        XCTAssertEqual(Emoji.getAll().count, 0)
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    func testFailedCallWithCache() async {
+        var mockSession: URLSessionSuccessMock
+        var success: Bool
+        
+        // Clear tables.
+        Category.deleteAll()
+        
+        // Setup URLSessionSuccessMock for success.
+        mockSession = URLSessionSuccessMock(forSuccess: true)
+        success = await EmojiService.getEmojis(urlSession: mockSession)
+        // Assert data was decoded and saved.
+        XCTAssertTrue(success)
+        
+        // Setup URLSessionSuccessMock for failure.
+        mockSession = URLSessionSuccessMock(forSuccess: false)
+        success = await EmojiService.getEmojis(urlSession: mockSession)
+        // Assert data was retrieved anyways.
+        XCTAssertTrue(success)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }

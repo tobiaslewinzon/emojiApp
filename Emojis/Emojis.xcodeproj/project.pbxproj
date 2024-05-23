@@ -18,6 +18,9 @@
 		41F162412BFEABD50067C75C /* PersistanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F162402BFEABD50067C75C /* PersistanceController.swift */; };
 		41F162432BFEAEB50067C75C /* Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F162422BFEAEB50067C75C /* Emoji.swift */; };
 		41F162452BFEAF990067C75C /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F162442BFEAF990067C75C /* Category.swift */; };
+		41F162482BFEC8EE0067C75C /* EmojiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F162472BFEC8EE0067C75C /* EmojiService.swift */; };
+		41F1624A2BFEEAC50067C75C /* emojisMockResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 41F162492BFEEAC50067C75C /* emojisMockResponse.json */; };
+		41F1624D2BFEEAED0067C75C /* URLSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F1624C2BFEEAED0067C75C /* URLSessionMock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +55,9 @@
 		41F162402BFEABD50067C75C /* PersistanceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceController.swift; sourceTree = "<group>"; };
 		41F162422BFEAEB50067C75C /* Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoji.swift; sourceTree = "<group>"; };
 		41F162442BFEAF990067C75C /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		41F162472BFEC8EE0067C75C /* EmojiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiService.swift; sourceTree = "<group>"; };
+		41F162492BFEEAC50067C75C /* emojisMockResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emojisMockResponse.json; sourceTree = "<group>"; };
+		41F1624C2BFEEAED0067C75C /* URLSessionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionMock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +129,8 @@
 		41F1621F2BFEAAC10067C75C /* EmojisTests */ = {
 			isa = PBXGroup;
 			children = (
+				41F1624B2BFEEAD90067C75C /* Mocks */,
+				41F162492BFEEAC50067C75C /* emojisMockResponse.json */,
 				41F162202BFEAAC10067C75C /* EmojisTests.swift */,
 			);
 			path = EmojisTests;
@@ -140,11 +148,28 @@
 		41F162392BFEAB3D0067C75C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				41F162462BFEC8CF0067C75C /* Service */,
 				41F1623D2BFEABAA0067C75C /* Model.xcdatamodeld */,
 				41F162422BFEAEB50067C75C /* Emoji.swift */,
 				41F162442BFEAF990067C75C /* Category.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		41F162462BFEC8CF0067C75C /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				41F162472BFEC8EE0067C75C /* EmojiService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		41F1624B2BFEEAD90067C75C /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				41F1624C2BFEEAED0067C75C /* URLSessionMock.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,6 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41F1624A2BFEEAC50067C75C /* emojisMockResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +309,7 @@
 				41F1623F2BFEABAA0067C75C /* Model.xcdatamodeld in Sources */,
 				41F162412BFEABD50067C75C /* PersistanceController.swift in Sources */,
 				41F162452BFEAF990067C75C /* Category.swift in Sources */,
+				41F162482BFEC8EE0067C75C /* EmojiService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,6 +317,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41F1624D2BFEEAED0067C75C /* URLSessionMock.swift in Sources */,
 				41F162212BFEAAC10067C75C /* EmojisTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -446,6 +474,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Emojis/Preview Content\"";
+				DEVELOPMENT_TEAM = G26U3W38S4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -474,6 +503,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Emojis/Preview Content\"";
+				DEVELOPMENT_TEAM = G26U3W38S4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

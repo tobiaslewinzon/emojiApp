@@ -35,12 +35,28 @@ struct PersistenceController {
         //   - The newer (in-memory) version of the entity will trump over the old one.
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                print("Error saving viewContext: \(error.localizedDescription)")
-            }
+        context.saveAndThrow()
+    }
+    
+    /// Returns a background context.
+    func getBackgroundContext() -> NSManagedObjectContext {
+        let context = PersistenceController.shared.container.newBackgroundContext()
+        // Setup merge policy to safely attempt to save new version of the entities:
+        //   - Respect constraints.
+        //   - The newer (in-memory) version of the entity will trump over the old one.
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        return context
+    }
+}
+
+extension NSManagedObjectContext {
+    /// Calls save() and handles throwing.
+    func saveAndThrow() {
+        guard hasChanges else { return }
+        do {
+            try save()
+        } catch {
+            print("Error saving viewContext: \(error.localizedDescription)")
         }
     }
 }

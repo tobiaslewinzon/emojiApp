@@ -14,6 +14,7 @@ class Emoji: NSManagedObject {
         return NSFetchRequest<Emoji>(entityName: "Emoji")
     }
     
+    @NSManaged public var name: String
     @NSManaged public var unicode: NSSet
     @NSManaged public var category: Category
     
@@ -33,7 +34,6 @@ class Emoji: NSManagedObject {
             do {
                 let fetchResults = try context.fetch(self.fetchRequest())
                 // Return result.
-                print("Successfully fetched \(fetchResults.count) Emojis")
                 return fetchResults
                 
             } catch let error {

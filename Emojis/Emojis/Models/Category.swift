@@ -16,6 +16,24 @@ class Category: NSManagedObject {
     @NSManaged public var name: String
     @NSManaged public var emojis: Set<Emoji>
     
+    static func getOrCreate(name: String, context: NSManagedObjectContext? = nil) -> Category? {
+        let context = context ?? PersistenceController.shared.container.viewContext
+        
+        do {
+            let request = self.fetchRequest()
+            request.predicate = NSPredicate(format: "name == %i", name)
+            
+            let fetchResults = try context.fetch(request)
+            // Return result.
+            return fetchResults.first ?? create(context: context)
+            
+        } catch let error {
+            print("Unable to fetch all Categories: \(error.localizedDescription)")
+            return nil
+        }
+        
+    }
+    
     /// Creates and returns a new instace of Category.
     /// - Parameter context: Pass a context or nil to default to the viewContext.
     static func create(context: NSManagedObjectContext? = nil) -> Category {
@@ -32,12 +50,30 @@ class Category: NSManagedObject {
             do {
                 let fetchResults = try context.fetch(self.fetchRequest())
                 // Return result.
-                print("Successfully fetched \(fetchResults.count) Categories")
                 return fetchResults
                 
             } catch let error {
                 print("Unable to fetch all Categories: \(error.localizedDescription)")
                 return []
+            }
+        }
+    }
+    
+    /// Deletes all Categories.
+    /// - Parameter context: Pass a context or nil to default to the viewContext.
+    static func deleteAll(context: NSManagedObjectContext? = nil) {
+        let context = context ?? PersistenceController.shared.container.viewContext
+        
+        return context.performAndWait {
+            do {
+                let fetchResults = try context.fetch(self.fetchRequest())
+                // Return result.
+                fetchResults.forEach { category in
+                    context.delete(category)
+                }
+                
+            } catch let error {
+                print("Unable to delete all Categories: \(error.localizedDescription)")
             }
         }
     }

@@ -10,12 +10,21 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Button {
+                Task{
+                    await getEmojis()
+                }
+            } label: {
+                Text("Get emojis")
+            }
         }
         .padding()
+    }
+    
+    func getEmojis() async {
+        let success = await EmojiService.getEmojis()
+        _ = success ? print("Successfully fetched API or cached Emojis.") :
+        print("Emoji called failed and there is no cached data.")
     }
 }
 
