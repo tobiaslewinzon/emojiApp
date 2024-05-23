@@ -13,15 +13,32 @@ class Category: NSManagedObject {
         return NSFetchRequest<Category>(entityName: "Category")
     }
     
-    @NSManaged public var name: String
-    @NSManaged public var emojis: Set<Emoji>
+    @NSManaged public var name: String?
+    @NSManaged public var emojis: NSSet?
+    
+    static func getByName(name: String, context: NSManagedObjectContext? = nil) -> Category? {
+        let context = context ?? PersistenceController.shared.container.viewContext
+        
+        do {
+            let request = self.fetchRequest()
+            request.predicate = NSPredicate(format: "name == %@", name)
+            
+            let fetchResults = try context.fetch(request)
+            // Return result.
+            return fetchResults.first
+            
+        } catch let error {
+            print("Unable to fetch all Categories: \(error.localizedDescription)")
+            return nil
+        }
+    }
     
     static func getOrCreate(name: String, context: NSManagedObjectContext? = nil) -> Category? {
         let context = context ?? PersistenceController.shared.container.viewContext
         
         do {
             let request = self.fetchRequest()
-            request.predicate = NSPredicate(format: "name == %i", name)
+            request.predicate = NSPredicate(format: "name == %@", name)
             
             let fetchResults = try context.fetch(request)
             // Return result.
@@ -31,7 +48,6 @@ class Category: NSManagedObject {
             print("Unable to fetch all Categories: \(error.localizedDescription)")
             return nil
         }
-        
     }
     
     /// Creates and returns a new instace of Category.

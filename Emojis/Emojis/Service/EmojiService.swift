@@ -82,7 +82,9 @@ class EmojiService {
             
             // Setup relationships.
             emoji.category = category
-            category.emojis.insert(emoji)
+            
+            let emojis = category.mutableSetValue(forKey: #keyPath(Category.emojis))
+            emojis.add(emoji)
             
             context.saveAndThrow()
         }

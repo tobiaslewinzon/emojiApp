@@ -42,4 +42,21 @@ class Emoji: NSManagedObject {
             }
         }
     }
+    
+    static func getByCategory(category: String, context: NSManagedObjectContext? = nil) -> [Emoji] {
+        let context = context ?? PersistenceController.shared.container.viewContext
+        
+        do {
+            let request = self.fetchRequest()
+            request.predicate = NSPredicate(format: "category.name == %@", category)
+            
+            let fetchResults = try context.fetch(request)
+            // Return result.
+            return fetchResults
+            
+        } catch let error {
+            print("Unable to fetch all Categories: \(error.localizedDescription)")
+            return []
+        }
+    }
 }
